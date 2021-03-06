@@ -41,13 +41,15 @@ int main(int argc, char **argv)
   TGame lGame;
   TMoveList lList;
   TBook lBook;
-  char lInput[80], lCmd[80], fn[30], lMoveStr[/*5*/6];
+  char lInput[80], lCmd[80], lFileName[30], lMoveStr[/*5*/6];
   char lPlacement[72], lActiveColor[2], lCastling[5], lEnPassant[3], lHalfMoves[4], lFullMove[4];
   int i, lComputerColor = BLACK, lTimeElapsed, lUseBook, pt, vt, tseconds2;
-  time_t lSeed;
-
-  time(&lSeed);
-  srand((unsigned int) lSeed);
+  time_t lTime;
+  struct tm* lTimeStruct;
+  char lLogName[30];
+  
+  time(&lTime);
+  srand((unsigned int) lTime);
   
   setbuf(stdin, NULL);
   setbuf(stdout, NULL);
@@ -66,8 +68,11 @@ int main(int argc, char **argv)
   
   printf("*** Sachy (simple chess program) v%s ***\n", VERSION "." REVISION);
   
-  f1 = fopen("1.log", "w");
-  f2 = fopen("2.log", "w");
+  lTimeStruct = localtime(&lTime);
+  strftime(lLogName, 30, "%Y%m%d%H%M%S-1.log", lTimeStruct);
+  f1 = fopen(lLogName, "w");
+  strftime(lLogName, 30, "%Y%m%d%H%M%S-2.log", lTimeStruct);
+  f2 = fopen(lLogName, "w");
   
   InitGame(&lGame);
   
@@ -300,14 +305,14 @@ int main(int argc, char **argv)
     }
     else if (strcmp(lCmd, "open") == 0)
     {
-      scanf("%29s", fn);
-      OpenFile(&lGame, fn);
+      scanf("%29s", lFileName);
+      OpenFile(&lGame, lFileName);
       lUseBook = 0;
     }
     else if (strcmp(lCmd, "save") == 0)
     {
-      scanf("%29s", fn);
-      SaveFile(&lGame, fn);
+      scanf("%29s", lFileName);
+      SaveFile(&lGame, lFileName);
     }
     
     /* Opponent move */
