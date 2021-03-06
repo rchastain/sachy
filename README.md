@@ -28,3 +28,8 @@ Retouched by Dann Corbit (v0.2.0.1) then by Roland Chastain (v0.2.0.2).
 
 http://web.archive.org/web/20021208030047/http://xtrmntr.org/ORBman/download/sachy-0.2.00.tar.bz2
 http://computer-chess.org/lib/exe/fetch.php?media=computer_chess:wiki:download:sachy-0.2.01dc.rar
+
+## Logo
+
+![alt text](https://raw.githubusercontent.com/rchastain/sachy/main/logo/sachy.jpg)
+
