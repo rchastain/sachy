@@ -28,58 +28,58 @@ void MakeMove(TMove aMove, TGame *aGame)
   
   switch (aGame->sidetomove)
   {
-  case WHITE:
-    if (!FindPiece(lFrom, aGame->board, &(aGame->whiteplayer), &lPieceIdx))
-    {
-      fprintf(stderr, "Internal error (%s, line %d)\n", __FILE__, __LINE__);
-      //PrintBoard(*aGame);
-      //printf("%s", aMoveStr);
-      return;
-    }
-    break;
-  case BLACK:
-    if (!FindPiece(lFrom, aGame->board, &(aGame->blackplayer), &lPieceIdx))
-    {
-      fprintf(stderr, "Internal error (%s, line %d)\n", __FILE__, __LINE__);
-      //PrintBoard(*aGame);
-      //printf("%s", aMoveStr);
-      return;
-    }
-    break;
+    case WHITE:
+      if (!FindPiece(lFrom, aGame->board, &(aGame->whiteplayer), &lPieceIdx))
+      {
+        fprintf(stderr, "Internal error (%s, line %d)\n", __FILE__, __LINE__);
+        PrintBoard(*aGame);
+        //printf("%s", aMoveStr);
+        return;
+      }
+      break;
+    case BLACK:
+      if (!FindPiece(lFrom, aGame->board, &(aGame->blackplayer), &lPieceIdx))
+      {
+        fprintf(stderr, "Internal error (%s, line %d)\n", __FILE__, __LINE__);
+        PrintBoard(*aGame);
+        //printf("%s", aMoveStr);
+        return;
+      }
+      break;
   }
   
   switch (aGame->sidetomove)
   {
-  case WHITE:
-    aGame->whiteplayer.pieces[lPieceIdx].pos = lTo;
-    if (aGame->whiteplayer.pieces[lPieceIdx].fig == WKNG)
-    {
-      aGame->whiteplayer.rochada[0] = 0;
-      aGame->whiteplayer.rochada[1] = 0;
-    }
-    else if ((aGame->whiteplayer.pieces[lPieceIdx].fig == WROK))
-    {
-      if (lFrom.x == 7)
+    case WHITE:
+      aGame->whiteplayer.pieces[lPieceIdx].pos = lTo;
+      if (aGame->whiteplayer.pieces[lPieceIdx].fig == WKNG)
+      {
         aGame->whiteplayer.rochada[0] = 0;
-      if (lFrom.x == 0)
         aGame->whiteplayer.rochada[1] = 0;
-    }
-    break;
-  case BLACK:
-    aGame->blackplayer.pieces[lPieceIdx].pos = lTo;
-    if (aGame->blackplayer.pieces[lPieceIdx].fig == BKNG)
-    {
-      aGame->blackplayer.rochada[0] = 0;
-      aGame->blackplayer.rochada[1] = 0;
-    }
-    else if ((aGame->blackplayer.pieces[lPieceIdx].fig == BROK))
-    {
-      if (lFrom.x == 7)
+      }
+      else if ((aGame->whiteplayer.pieces[lPieceIdx].fig == WROK))
+      {
+        if (lFrom.x == 7)
+          aGame->whiteplayer.rochada[0] = 0;
+        if (lFrom.x == 0)
+          aGame->whiteplayer.rochada[1] = 0;
+      }
+      break;
+    case BLACK:
+      aGame->blackplayer.pieces[lPieceIdx].pos = lTo;
+      if (aGame->blackplayer.pieces[lPieceIdx].fig == BKNG)
+      {
         aGame->blackplayer.rochada[0] = 0;
-      if (lFrom.x == 0)
         aGame->blackplayer.rochada[1] = 0;
-    }
-    break;
+      }
+      else if ((aGame->blackplayer.pieces[lPieceIdx].fig == BROK))
+      {
+        if (lFrom.x == 7)
+          aGame->blackplayer.rochada[0] = 0;
+        if (lFrom.x == 0)
+          aGame->blackplayer.rochada[1] = 0;
+      }
+      break;
   }
   /* pokud bere nejakou figuru, tak vyres protihrace */
   if (aGame->board[lTo.x][lTo.y] != EMPT)
@@ -95,32 +95,32 @@ void MakeMove(TMove aMove, TGame *aGame)
       aGame->blackplayer.rochada[0] = 0;
     switch (aGame->sidetomove)
     {
-    case BLACK:
-      if (!FindPiece(lTo, aGame->board, &(aGame->whiteplayer), &lCapturedPieceIdx))
-      {
-        fprintf(stderr, "Internal error (%s, line %d)\n", __FILE__, __LINE__);
-        return;
-      }
-      break;
-    case WHITE:
-      if (!FindPiece(lTo, aGame->board, &(aGame->blackplayer), &lCapturedPieceIdx))
-      {
-        fprintf(stderr, "Internal error (%s, line %d)\n", __FILE__, __LINE__);
-        return;
-      }
-      break;
+      case BLACK:
+        if (!FindPiece(lTo, aGame->board, &(aGame->whiteplayer), &lCapturedPieceIdx))
+        {
+          fprintf(stderr, "Internal error (%s, line %d)\n", __FILE__, __LINE__);
+          return;
+        }
+        break;
+      case WHITE:
+        if (!FindPiece(lTo, aGame->board, &(aGame->blackplayer), &lCapturedPieceIdx))
+        {
+          fprintf(stderr, "Internal error (%s, line %d)\n", __FILE__, __LINE__);
+          return;
+        }
+        break;
     }
     /* ted odebrat figuru z protihracovych figurek */
     switch (aGame->sidetomove)
     {
-    case BLACK:
-      aGame->whiteplayer.pieces[lCapturedPieceIdx].fig = EMPT;
-      RemovePiece(&(aGame->whiteplayer));
-      break;
-    case WHITE:
-      aGame->blackplayer.pieces[lCapturedPieceIdx].fig = EMPT;
-      RemovePiece(&(aGame->blackplayer));
-      break;
+      case BLACK:
+        aGame->whiteplayer.pieces[lCapturedPieceIdx].fig = EMPT;
+        RemovePiece(&(aGame->whiteplayer));
+        break;
+      case WHITE:
+        aGame->blackplayer.pieces[lCapturedPieceIdx].fig = EMPT;
+        RemovePiece(&(aGame->blackplayer));
+        break;
     }
   }
   else if (
@@ -131,42 +131,42 @@ void MakeMove(TMove aMove, TGame *aGame)
   {
     switch (aGame->sidetomove)
     {
-    case WHITE:
-      lAux.y = 4;
-      break;
-    case BLACK:
-      lAux.y = 3;
-      break;
+      case WHITE:
+        lAux.y = 4;
+        break;
+      case BLACK:
+        lAux.y = 3;
+        break;
     }
     lAux.x = aGame->enpas;
     switch (aGame->sidetomove)
     {
-    case BLACK:
-      if (!FindPiece(lAux, aGame->board, &(aGame->whiteplayer), &lCapturedPieceIdx))
-      {
-        fprintf(stderr, "Internal error (%s, line %d)\n", __FILE__, __LINE__);
-        return;
-      }
-      break;
-    case WHITE:
-      if (!FindPiece(lAux, aGame->board, &(aGame->blackplayer), &lCapturedPieceIdx))
-      {
-        fprintf(stderr, "Internal error (%s, line %d)\n", __FILE__, __LINE__);
-        return;
-      }
-      break;
+      case BLACK:
+        if (!FindPiece(lAux, aGame->board, &(aGame->whiteplayer), &lCapturedPieceIdx))
+        {
+          fprintf(stderr, "Internal error (%s, line %d)\n", __FILE__, __LINE__);
+          return;
+        }
+        break;
+      case WHITE:
+        if (!FindPiece(lAux, aGame->board, &(aGame->blackplayer), &lCapturedPieceIdx))
+        {
+          fprintf(stderr, "Internal error (%s, line %d)\n", __FILE__, __LINE__);
+          return;
+        }
+        break;
     }
     /* ted odebrat pesce z protihracovych figurek */
     switch (aGame->sidetomove)
     {
-    case BLACK:
-      aGame->whiteplayer.pieces[lCapturedPieceIdx].fig = EMPT;
-      RemovePiece(&(aGame->whiteplayer));
-      break;
-    case WHITE:
-      aGame->blackplayer.pieces[lCapturedPieceIdx].fig = EMPT;
-      RemovePiece(&(aGame->blackplayer));
-      break;
+      case BLACK:
+        aGame->whiteplayer.pieces[lCapturedPieceIdx].fig = EMPT;
+        RemovePiece(&(aGame->whiteplayer));
+        break;
+      case WHITE:
+        aGame->blackplayer.pieces[lCapturedPieceIdx].fig = EMPT;
+        RemovePiece(&(aGame->blackplayer));
+        break;
     }
     /* jeste ji zrusit na sachovnici */
     aGame->board[lAux.x][lAux.y] = EMPT;
@@ -174,22 +174,20 @@ void MakeMove(TMove aMove, TGame *aGame)
   /* hejbni prislusnou figurou na sachovnici */
   aGame->board[lTo.x][lTo.y] = aGame->board[lFrom.x][lFrom.y];
   aGame->board[lFrom.x][lFrom.y] = EMPT;
-  switch (aGame->sidetomove)    /* nastavi promennou enpas */
+  switch (aGame->sidetomove) /* nastavi promennou enpas */
   {
-  case WHITE:
-    if ((aGame->whiteplayer.pieces[lPieceIdx].fig == WPWN) &&
-        (lTo.y - lFrom.y == 2))
-      aGame->enpas = lTo.x;
-    else
-      aGame->enpas = -1;
-    break;
-  case BLACK:
-    if ((aGame->blackplayer.pieces[lPieceIdx].fig == BPWN) &&
-        (lTo.y - lFrom.y == -2))
-      aGame->enpas = lTo.x;
-    else
-      aGame->enpas = -1;
-    break;
+    case WHITE:
+      if ((aGame->whiteplayer.pieces[lPieceIdx].fig == WPWN) && (lTo.y - lFrom.y == 2))
+        aGame->enpas = lTo.x;
+      else
+        aGame->enpas = -1;
+      break;
+    case BLACK:
+      if ((aGame->blackplayer.pieces[lPieceIdx].fig == BPWN) && (lTo.y - lFrom.y == -2))
+        aGame->enpas = lTo.x;
+      else
+        aGame->enpas = -1;
+      break;
   }
   /* pokud je rochada, hejbni jeste vezema */
   if (((aGame->sidetomove == WHITE) && (aGame->whiteplayer.pieces[lPieceIdx].fig == WKNG)) ||
@@ -202,7 +200,10 @@ void MakeMove(TMove aMove, TGame *aGame)
       lAux.x = 7;
       lAux.y = 0;
       if (!FindPiece(lAux, aGame->board, &(aGame->whiteplayer), &lRookIdx))
+      {
         fprintf(stderr, "Internal error (%s, line %d)\n", __FILE__, __LINE__);
+        return;
+      }
       else
       {
         lAux.x = 5;
@@ -218,7 +219,10 @@ void MakeMove(TMove aMove, TGame *aGame)
       lAux.x = 0;
       lAux.y = 0;
       if (!FindPiece(lAux, aGame->board, &(aGame->whiteplayer), &lRookIdx))
+      {
         fprintf(stderr, "Internal error (%s, line %d)\n", __FILE__, __LINE__);
+        return;
+      }
       else
       {
         lAux.x = 3;
@@ -236,6 +240,7 @@ void MakeMove(TMove aMove, TGame *aGame)
       if (!FindPiece(lAux, aGame->board, &(aGame->blackplayer), &lRookIdx))
       {
         fprintf(stderr, "Internal error (%s, line %d)\n", __FILE__, __LINE__);
+        return;
       }
       else
       {
@@ -252,7 +257,10 @@ void MakeMove(TMove aMove, TGame *aGame)
       lAux.x = 0;
       lAux.y = 7;
       if (!FindPiece(lAux, aGame->board, &(aGame->blackplayer), &lRookIdx))
+      {
         fprintf(stderr, "Internal error (%s, line %d)\n", __FILE__, __LINE__);
+        return;
+      }
       else
       {
         lAux.x = 3;
@@ -262,23 +270,44 @@ void MakeMove(TMove aMove, TGame *aGame)
       }
     }
   }
-  /* pokud pesec dorazi na konec, zmen ho na DAMu */
-  if (((aGame->sidetomove == WHITE) && (aGame->whiteplayer.pieces[lPieceIdx].fig == WPWN) &&
-       (lTo.y == 7)) ||
-      ((aGame->sidetomove == BLACK) && (aGame->blackplayer.pieces[lPieceIdx].fig == BPWN) &&
-       (lTo.y == 0)))    /* budeme menit */
+  /* pokud pesec dorazi na konec, zmen ho na damu */
+  if (
+    ((aGame->sidetomove == WHITE) && (aGame->whiteplayer.pieces[lPieceIdx].fig == WPWN) && (lTo.y == 7)) ||
+    ((aGame->sidetomove == BLACK) && (aGame->blackplayer.pieces[lPieceIdx].fig == BPWN) && (lTo.y == 0))
+  ) /* budeme menit */
   {
+    /*
     switch (aGame->sidetomove)
     {
-    case WHITE:
-      aGame->whiteplayer.pieces[lPieceIdx].fig = WQEN;
-      aGame->board[lTo.x][lTo.y] = WQEN;
-      break;
-    case BLACK:
-      aGame->blackplayer.pieces[lPieceIdx].fig = BQEN;
-      aGame->board[lTo.x][lTo.y] = BQEN;
-      break;
+      case WHITE:
+        aGame->whiteplayer.pieces[lPieceIdx].fig = WQEN;
+        aGame->board[lTo.x][lTo.y] = WQEN;
+        break;
+      case BLACK:
+        aGame->blackplayer.pieces[lPieceIdx].fig = BQEN;
+        aGame->board[lTo.x][lTo.y] = BQEN;
+        break;
     }
+    */
+    if (lMove.promotion == EMPT)
+    {
+      fprintf(stderr, "Internal error (%s, line %d)\n", __FILE__, __LINE__);
+      return;
+    }
+    else
+    {
+      switch (aGame->sidetomove)
+      {
+        case WHITE:
+          aGame->whiteplayer.pieces[lPieceIdx].fig = lMove.promotion;
+          aGame->board[lTo.x][lTo.y] = lMove.promotion;
+          break;
+        case BLACK:
+          aGame->blackplayer.pieces[lPieceIdx].fig = lMove.promotion;
+          aGame->board[lTo.x][lTo.y] = lMove.promotion;
+          break;
+      }
+    } 
   }
   /* update historie tahu */
   (aGame->fHalfMovesCount)++;
