@@ -117,7 +117,7 @@ void PrintPieces(TGame); /* vytiskne pozice vsech figur */
 void SqrToStr(TSquare, char *); /* Pozice -> e4 atd */
 void StrToSqr(char *, TSquare *); /* e4 -> Pozice ... */
 void PrmToStr(char, char *); /* Promotion to string */
-void StrToPrm(char *, char); /* String to promotion */
+int StrToPrm(char *); /* String to promotion */
 
 /* rules.c */
 int IsMoveStr(char *); /* zda to je e1e3,d4d5,b1c3 ... proste tah */

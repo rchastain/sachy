@@ -208,14 +208,14 @@ void PrmToStr(char aPiece, char *ch) // Roland
   }
 }
 
-void StrToPrm(char *ch, char aPiece)
+int StrToPrm(char *ch)
 {
-  if (ch[0] == 'b') aPiece = WBSP;
-  else if (ch[0] == 'n') aPiece = WKNT;
-  else if (ch[0] == 'r') aPiece = WROK;
-  else if (ch[0] == 'q') aPiece = WQEN;
+  if (ch[0] == 'b') return WBSP;
+  else if (ch[0] == 'n') return WKNT;
+  else if (ch[0] == 'r') return WROK;
+  else if (ch[0] == 'q') return WQEN;
   else
-    aPiece = EMPT;
+    return EMPT;
 }
 
 /* soubory */

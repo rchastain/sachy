@@ -31,7 +31,7 @@ void MakeMove(TMove aMove, TGame *aGame)
     case WHITE:
       if (!FindPiece(lFrom, aGame->board, &(aGame->whiteplayer), &lPieceIdx))
       {
-        fprintf(stderr, "Internal error (%s, line %d)\n", __FILE__, __LINE__);
+        fprintf(stderr, "# Internal error (%s, line %d)\n", __FILE__, __LINE__);
         PrintBoard(*aGame);
         //printf("%s", aMoveStr);
         return;
@@ -40,7 +40,7 @@ void MakeMove(TMove aMove, TGame *aGame)
     case BLACK:
       if (!FindPiece(lFrom, aGame->board, &(aGame->blackplayer), &lPieceIdx))
       {
-        fprintf(stderr, "Internal error (%s, line %d)\n", __FILE__, __LINE__);
+        fprintf(stderr, "# Internal error (%s, line %d)\n", __FILE__, __LINE__);
         PrintBoard(*aGame);
         //printf("%s", aMoveStr);
         return;
@@ -98,14 +98,14 @@ void MakeMove(TMove aMove, TGame *aGame)
       case BLACK:
         if (!FindPiece(lTo, aGame->board, &(aGame->whiteplayer), &lCapturedPieceIdx))
         {
-          fprintf(stderr, "Internal error (%s, line %d)\n", __FILE__, __LINE__);
+          fprintf(stderr, "# Internal error (%s, line %d)\n", __FILE__, __LINE__);
           return;
         }
         break;
       case WHITE:
         if (!FindPiece(lTo, aGame->board, &(aGame->blackplayer), &lCapturedPieceIdx))
         {
-          fprintf(stderr, "Internal error (%s, line %d)\n", __FILE__, __LINE__);
+          fprintf(stderr, "# Internal error (%s, line %d)\n", __FILE__, __LINE__);
           return;
         }
         break;
@@ -144,14 +144,14 @@ void MakeMove(TMove aMove, TGame *aGame)
       case BLACK:
         if (!FindPiece(lAux, aGame->board, &(aGame->whiteplayer), &lCapturedPieceIdx))
         {
-          fprintf(stderr, "Internal error (%s, line %d)\n", __FILE__, __LINE__);
+          fprintf(stderr, "# Internal error (%s, line %d)\n", __FILE__, __LINE__);
           return;
         }
         break;
       case WHITE:
         if (!FindPiece(lAux, aGame->board, &(aGame->blackplayer), &lCapturedPieceIdx))
         {
-          fprintf(stderr, "Internal error (%s, line %d)\n", __FILE__, __LINE__);
+          fprintf(stderr, "# Internal error (%s, line %d)\n", __FILE__, __LINE__);
           return;
         }
         break;
@@ -201,7 +201,7 @@ void MakeMove(TMove aMove, TGame *aGame)
       lAux.y = 0;
       if (!FindPiece(lAux, aGame->board, &(aGame->whiteplayer), &lRookIdx))
       {
-        fprintf(stderr, "Internal error (%s, line %d)\n", __FILE__, __LINE__);
+        fprintf(stderr, "# Internal error (%s, line %d)\n", __FILE__, __LINE__);
         return;
       }
       else
@@ -220,7 +220,7 @@ void MakeMove(TMove aMove, TGame *aGame)
       lAux.y = 0;
       if (!FindPiece(lAux, aGame->board, &(aGame->whiteplayer), &lRookIdx))
       {
-        fprintf(stderr, "Internal error (%s, line %d)\n", __FILE__, __LINE__);
+        fprintf(stderr, "# Internal error (%s, line %d)\n", __FILE__, __LINE__);
         return;
       }
       else
@@ -239,7 +239,7 @@ void MakeMove(TMove aMove, TGame *aGame)
       lAux.y = 7;
       if (!FindPiece(lAux, aGame->board, &(aGame->blackplayer), &lRookIdx))
       {
-        fprintf(stderr, "Internal error (%s, line %d)\n", __FILE__, __LINE__);
+        fprintf(stderr, "# Internal error (%s, line %d)\n", __FILE__, __LINE__);
         return;
       }
       else
@@ -258,7 +258,7 @@ void MakeMove(TMove aMove, TGame *aGame)
       lAux.y = 7;
       if (!FindPiece(lAux, aGame->board, &(aGame->blackplayer), &lRookIdx))
       {
-        fprintf(stderr, "Internal error (%s, line %d)\n", __FILE__, __LINE__);
+        fprintf(stderr, "# Internal error (%s, line %d)\n", __FILE__, __LINE__);
         return;
       }
       else
@@ -291,7 +291,7 @@ void MakeMove(TMove aMove, TGame *aGame)
     */
     if (lMove.promotion == EMPT)
     {
-      fprintf(stderr, "Internal error (%s, line %d)\n", __FILE__, __LINE__);
+      fprintf(stderr, "# Internal error (%s, line %d)\n", __FILE__, __LINE__);
       return;
     }
     else
@@ -303,8 +303,8 @@ void MakeMove(TMove aMove, TGame *aGame)
           aGame->board[lTo.x][lTo.y] = lMove.promotion;
           break;
         case BLACK:
-          aGame->blackplayer.pieces[lPieceIdx].fig = lMove.promotion;
-          aGame->board[lTo.x][lTo.y] = lMove.promotion;
+          aGame->blackplayer.pieces[lPieceIdx].fig = -1 * lMove.promotion;
+          aGame->board[lTo.x][lTo.y] = -1 * lMove.promotion;
           break;
       }
     } 
@@ -327,7 +327,11 @@ void MakeMoveStr(char *aMoveStr, TGame *aGame)
   StrToSqr(&aMoveStr[0], &lFrom);
   StrToSqr(&aMoveStr[2], &lTo);
   if (strlen(aMoveStr) > 4)
-    StrToPrm(&aMoveStr[4], lPromotion);
+  {
+    printf("# Five characters detected (%s)\n", aMoveStr);
+    lPromotion = StrToPrm(&aMoveStr[4]);
+    printf("# Promotion value: %d\n", lPromotion);
+  }
   lMove.from = lFrom;
   lMove.to = lTo;
   lMove.promotion = lPromotion;

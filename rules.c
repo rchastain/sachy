@@ -123,7 +123,7 @@ int IsLegal(char *aMoveStr, TGame * aGame, int vv)
   }
   if (vvv) {};
   /* vse je tedy ok */
-  return (1);
+  return 1;
 }
 
 int WhitePiece(int aPiece)

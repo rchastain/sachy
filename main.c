@@ -332,7 +332,7 @@ int main(int argc, char **argv)
         PrintBoard(lGame);
       }
       else
-        printf("Illegal move: %s\n", lCmd);
+        printf("# Illegal move: %s\n", lCmd);
     }
     else
       printf("# Unknown command: %s\n", lCmd);
