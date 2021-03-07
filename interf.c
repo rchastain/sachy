@@ -179,24 +179,24 @@ void StrToSqr(char *ch, TSquare *p)
   p->y = (int)(ch[1] - '1');
 }
 
-void PrmToStr(char aPiece, char *ch) // Roland
+void PrmToStr(char aPiece, char *ch)
 {
-  if ((aPiece == WBSP) || (aPiece == BBSP))
+  if (aPiece == WBSP)
   {
     ch[0] = 'b';
     ch[1] = '\0';
   }
-  else if ((aPiece == WKNT) || (aPiece == BKNT))
+  else if (aPiece == WKNT)
   {
     ch[0] = 'n';
     ch[1] = '\0';
   }
-  else if ((aPiece == WROK) || (aPiece == BROK))
+  else if (aPiece == WROK)
   {
     ch[0] = 'r';
     ch[1] = '\0';
   }
-  else if ((aPiece == WQEN) || (aPiece == BQEN))
+  else if (aPiece == WQEN)
   {
     ch[0] = 'q';
     ch[1] = '\0';
@@ -228,9 +228,9 @@ int ReadConfig(void)
   f = fopen(CFGFILE, "rt");
   if (f == NULL)
   {
-    printf("Warning: error reading configuration file %s: ", CFGFILE);
+    printf("# Warning: error reading configuration file %s: ", CFGFILE);
     perror(NULL);
-    printf("Using default values\n");
+    printf("# Using default values\n");
     return 0;
   }
   else
@@ -243,7 +243,7 @@ int ReadConfig(void)
     }
     else
     {
-      printf("Incorrect values in %s", CFGFILE);
+      printf("# Incorrect values in %s", CFGFILE);
       return 0;
     }
   }
@@ -268,7 +268,7 @@ void SaveFile(TGame * aGame, char *fname)
       fprintf(f, "%d %s\n", i, t);
     }
     fclose(f);
-    printf("%s written.\n", fname);
+    printf("# %s written.\n", fname);
   }
 }
 
@@ -290,15 +290,15 @@ void OpenFile(TGame * aGame, char *fname)
       {
         fscanf(f, "%d %s\n", &j, lMove);
         if (j != i)
-          printf("%d: Non consistent data\n", i);
+          printf("# %d: Non consistent data\n", i);
         StrToSqr(&(lMove[0]), &(historie[i].from));
         StrToSqr(&(lMove[2]), &(historie[i].to));
         MakeMoveStr(lMove, aGame);
       }
       else
-        printf("%d: Non consistent data\n", i);
+        printf("# %d: Non consistent data\n", i);
     }
     fclose(f);
-    printf("%s opened.\n", fname);
+    printf("# %s opened.\n", fname);
   }
 }

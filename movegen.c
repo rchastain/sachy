@@ -184,7 +184,7 @@ int MoveGen(TGame *aGame, TMoveList aList, int aOne)
       lMove.to = to;
       //if ((lPiece->fig == WPWN) && (to.y == 7)) lMove.promotion = WQEN;
       //else if ((lPiece->fig == BPWN) && (to.y == 0)) lMove.promotion = BQEN;
-      if (to.y == 0) lMove.promotion = BQEN;
+      if (to.y == 0) lMove.promotion = /*BQEN*/WQEN; /* Sic */
       else lMove.promotion = EMPT;
       if (IsMoveStr(lMoveStr) && IsLegal(lMoveStr, aGame, 0))
       {
@@ -217,7 +217,7 @@ int MoveGen(TGame *aGame, TMoveList aList, int aOne)
       lMove.to = to;
       //if ((lPiece->fig == WPWN) && (to.y == 7)) lMove.promotion = WQEN;
       //else if ((lPiece->fig == BPWN) && (to.y == 0)) lMove.promotion = BQEN;
-      if (to.y == 0) lMove.promotion = BQEN;
+      if (to.y == 0) lMove.promotion = /*BQEN*/WQEN; /* Sic */
       else lMove.promotion = EMPT;
       if (IsMoveStr(lMoveStr) && IsLegal(lMoveStr, aGame, 0))
       {
@@ -235,7 +235,7 @@ int MoveGen(TGame *aGame, TMoveList aList, int aOne)
       lMove.to = to;
       //if ((lPiece->fig == WPWN) && (to.y == 7)) lMove.promotion = WQEN;
       //else if ((lPiece->fig == BPWN) && (to.y == 0)) lMove.promotion = BQEN;
-      if (to.y == 0) lMove.promotion = BQEN;
+      if (to.y == 0) lMove.promotion = /*BQEN*/WQEN; /* Sic */
       else lMove.promotion = EMPT;
       if (IsMoveStr(lMoveStr) && IsLegal(lMoveStr, aGame, 0))
       {
@@ -838,8 +838,8 @@ void BSPMoveGen(TGame * aGame, TMoveList aList, int *lCount, int aPiece, int aOn
         if (aOne)
           return;
       }
-    }   /* posledni (braci) */
-  }     /* for i */
+    } /* posledni (braci) */
+  }
 }
 
 int SMoveGen(TGame * aGame, TMoveList aList)
