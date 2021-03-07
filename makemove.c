@@ -338,7 +338,8 @@ void MakeMoveStr(char *aMoveStr, TGame *aGame)
   MakeMove(lMove, aGame);
 }
 
-int BestMove(TGame *aGame, char aMoveStr[/*5*/6], int aOutput)
+/*
+int BestMove(TGame *aGame, char aMoveStr[6], int aOutput)
 {
   static TGame lGame;
   TMoveList lList;
@@ -360,7 +361,7 @@ int BestMove(TGame *aGame, char aMoveStr[/*5*/6], int aOutput)
     while (1)
     {
       lBest = -1;
-      lBestVal = -1 * MATV - 1; /* pokud najde mat ... */
+      lBestVal = -1 * MATV - 1;
       for (i = 0; i < lCount; i++)
       {
         lGame = *aGame;
@@ -378,7 +379,7 @@ int BestMove(TGame *aGame, char aMoveStr[/*5*/6], int aOutput)
       }
       time(&t2);
       if (aOutput) printf("%d %d %ld 0 %s\n", lDepth, lBestVal, t2 - t1, lMoveStr);
-      /* TODO make this better */
+      
       if ((((t2 - t1) * 5) * (aGame->tmoves - (((aGame->fHalfMovesCount + 1)) / 2) % aGame->tmoves)) > aGame->tleft)
         break;
       else
@@ -395,6 +396,7 @@ int BestMove(TGame *aGame, char aMoveStr[/*5*/6], int aOutput)
   
   return (t2 - t1 + 1);
 }
+*/
 
 int BestMove2(TGame *aGame, char aMoveStr[/*5*/6], int aOutput)
 {

@@ -141,7 +141,7 @@ int SMove(TGame *, TMove); /* zda je tah pro dohl. do tichych pozic */
 /* MakeMoveStr.c */
 void MakeMove(TMove, TGame *); /* defakto provede tah ... */
 void MakeMoveStr(char *, TGame *); /* defakto provede tah ... */
-int BestMove(TGame *, char *, int); /* najde a provede nejlepsi tah */
+//int BestMove(TGame *, char *, int); /* najde a provede nejlepsi tah */
 int BestMove2(TGame *, char *, int); /* najde a provede nejlepsi tah */
 
 /* movegen.c */
