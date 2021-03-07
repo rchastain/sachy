@@ -316,6 +316,8 @@ int MoveGen(TGame *aGame, TMoveList aList, int aOne)
         if (aOne)
           return 1;
       }
+      
+      break;
     }
     i++;
   }

@@ -171,6 +171,7 @@ void MakeMove(TMove aMove, TGame *aGame)
     /* jeste ji zrusit na sachovnici */
     aGame->board[lAux.x][lAux.y] = EMPT;
   }
+  
   /* hejbni prislusnou figurou na sachovnici */
   aGame->board[lTo.x][lTo.y] = aGame->board[lFrom.x][lFrom.y];
   aGame->board[lFrom.x][lFrom.y] = EMPT;
@@ -189,6 +190,7 @@ void MakeMove(TMove aMove, TGame *aGame)
         aGame->enpas = -1;
       break;
   }
+  
   /* pokud je rochada, hejbni jeste vezema */
   if (((aGame->sidetomove == WHITE) && (aGame->whiteplayer.pieces[lPieceIdx].fig == WKNG)) ||
       ((aGame->sidetomove == BLACK) && (aGame->blackplayer.pieces[lPieceIdx].fig == BKNG)))
@@ -270,6 +272,7 @@ void MakeMove(TMove aMove, TGame *aGame)
       }
     }
   }
+  
   /* pokud pesec dorazi na konec, zmen ho na damu */
   if (
     ((aGame->sidetomove == WHITE) && (aGame->whiteplayer.pieces[lPieceIdx].fig == WPWN) && (lTo.y == 7)) ||
@@ -291,8 +294,19 @@ void MakeMove(TMove aMove, TGame *aGame)
     */
     if (lMove.promotion == EMPT)
     {
-      fprintf(stderr, "# Internal error (%s, line %d)\n", __FILE__, __LINE__);
-      return;
+      //fprintf(stderr, "# Internal error (%s, line %d)\n", __FILE__, __LINE__);
+      //return;
+      switch (aGame->sidetomove)
+      {
+        case WHITE:
+          aGame->whiteplayer.pieces[lPieceIdx].fig = WQEN;
+          aGame->board[lTo.x][lTo.y] = WQEN;
+          break;
+        case BLACK:
+          aGame->blackplayer.pieces[lPieceIdx].fig = BQEN;
+          aGame->board[lTo.x][lTo.y] = BQEN;
+          break;
+      }
     }
     else
     {
