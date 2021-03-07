@@ -4,7 +4,7 @@
 
 #include <stdlib.h>
 #include <string.h>
-#include"data.h"
+#include "data.h"
 
 void InitGame(TGame *aGame)
 /* postavi pieces na sachovnici a nastavi hrace (jejich pieces ...) */

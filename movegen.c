@@ -175,6 +175,7 @@ int MoveGen(TGame *aGame, TMoveList aList, int aOne)
           return 1;
       }
       break;
+    
     case BPWN:
       to.x = lPiece->pos.x;
       to.y = lPiece->pos.y - 1;
@@ -184,7 +185,11 @@ int MoveGen(TGame *aGame, TMoveList aList, int aOne)
       lMove.to = to;
       //if ((lPiece->fig == WPWN) && (to.y == 7)) lMove.promotion = WQEN;
       //else if ((lPiece->fig == BPWN) && (to.y == 0)) lMove.promotion = BQEN;
-      if (to.y == 0) lMove.promotion = /*BQEN*/WQEN; /* Sic */
+      if (to.y == 0)
+      {
+        lMove.promotion = /*BQEN*/WQEN; /* Sic */
+        PrmToStr(lMove.promotion, &lMoveStr[4]);
+      }
       else lMove.promotion = EMPT;
       if (IsMoveStr(lMoveStr) && IsLegal(lMoveStr, aGame, 0))
       {
@@ -217,7 +222,11 @@ int MoveGen(TGame *aGame, TMoveList aList, int aOne)
       lMove.to = to;
       //if ((lPiece->fig == WPWN) && (to.y == 7)) lMove.promotion = WQEN;
       //else if ((lPiece->fig == BPWN) && (to.y == 0)) lMove.promotion = BQEN;
-      if (to.y == 0) lMove.promotion = /*BQEN*/WQEN; /* Sic */
+      if (to.y == 0)
+      {
+        lMove.promotion = /*BQEN*/WQEN; /* Sic */
+        PrmToStr(lMove.promotion, &lMoveStr[4]);
+      }
       else lMove.promotion = EMPT;
       if (IsMoveStr(lMoveStr) && IsLegal(lMoveStr, aGame, 0))
       {
@@ -235,7 +244,11 @@ int MoveGen(TGame *aGame, TMoveList aList, int aOne)
       lMove.to = to;
       //if ((lPiece->fig == WPWN) && (to.y == 7)) lMove.promotion = WQEN;
       //else if ((lPiece->fig == BPWN) && (to.y == 0)) lMove.promotion = BQEN;
-      if (to.y == 0) lMove.promotion = /*BQEN*/WQEN; /* Sic */
+      if (to.y == 0)
+      {
+        lMove.promotion = /*BQEN*/WQEN; /* Sic */
+        PrmToStr(lMove.promotion, &lMoveStr[4]);
+      }
       else lMove.promotion = EMPT;
       if (IsMoveStr(lMoveStr) && IsLegal(lMoveStr, aGame, 0))
       {
@@ -256,7 +269,11 @@ int MoveGen(TGame *aGame, TMoveList aList, int aOne)
       lMove.to = to;
       //if ((lPiece->fig == WPWN) && (to.y == 7)) lMove.promotion = WQEN;
       //else if ((lPiece->fig == BPWN) && (to.y == 0)) lMove.promotion = BQEN;
-      if (to.y == 7) lMove.promotion = WQEN;
+      if (to.y == 7)
+      {
+        lMove.promotion = WQEN;
+        PrmToStr(lMove.promotion, &lMoveStr[4]);
+      }
       else lMove.promotion = EMPT;
       if (IsMoveStr(lMoveStr) && IsLegal(lMoveStr, aGame, 0))
       {
@@ -289,7 +306,11 @@ int MoveGen(TGame *aGame, TMoveList aList, int aOne)
       lMove.to = to;
       //if ((lPiece->fig == WPWN) && (to.y == 7)) lMove.promotion = WQEN;
       //else if ((lPiece->fig == BPWN) && (to.y == 0)) lMove.promotion = BQEN;
-      if (to.y == 7) lMove.promotion = WQEN;
+      if (to.y == 7)
+      {
+        lMove.promotion = WQEN;
+        PrmToStr(lMove.promotion, &lMoveStr[4]);
+      }
       else lMove.promotion = EMPT;
       if (IsMoveStr(lMoveStr) && IsLegal(lMoveStr, aGame, 0))
       {
@@ -307,7 +328,11 @@ int MoveGen(TGame *aGame, TMoveList aList, int aOne)
       lMove.to = to;
       //if ((lPiece->fig == WPWN) && (to.y == 7)) lMove.promotion = WQEN;
       //else if ((lPiece->fig == BPWN) && (to.y == 0)) lMove.promotion = BQEN;
-      if (to.y == 7) lMove.promotion = WQEN;
+      if (to.y == 7)
+      {
+        lMove.promotion = WQEN;
+        PrmToStr(lMove.promotion, &lMoveStr[4]);
+      }
       else lMove.promotion = EMPT;
       if (IsMoveStr(lMoveStr) && IsLegal(lMoveStr, aGame, 0))
       {
@@ -854,5 +879,5 @@ int SMoveGen(TGame * aGame, TMoveList aList)
       aList[c] = aList[i];
       c++;
     }
-  return (c);
+  return c;
 }

@@ -104,8 +104,7 @@ int IsLegal(char *aMoveStr, TGame * aGame, int vv)
     }
   /* lze tou figurou takto tahnout? volne cesty jsou v IsPossible() */
   lPiece = aGame->board[from.x][from.y];
-  if ((lPiece == WKNG || lPiece == BKNG || lPiece == WPWN || lPiece == BPWN) &&
-      !TahFigurou2(lMove, aGame))
+  if ((lPiece == WKNG || lPiece == BKNG || lPiece == WPWN || lPiece == BPWN) && !TahFigurou2(lMove, aGame))
   {
     vvv = vv && printf("Illegal move (ambiguous move): ");
     return 0;

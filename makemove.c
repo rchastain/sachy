@@ -175,6 +175,7 @@ void MakeMove(TMove aMove, TGame *aGame)
   /* hejbni prislusnou figurou na sachovnici */
   aGame->board[lTo.x][lTo.y] = aGame->board[lFrom.x][lFrom.y];
   aGame->board[lFrom.x][lFrom.y] = EMPT;
+  
   switch (aGame->sidetomove) /* nastavi promennou enpas */
   {
     case WHITE:
@@ -294,8 +295,7 @@ void MakeMove(TMove aMove, TGame *aGame)
     */
     if (lMove.promotion == EMPT)
     {
-      //fprintf(stderr, "# Internal error (%s, line %d)\n", __FILE__, __LINE__);
-      //return;
+      fprintf(stderr, "# Internal error (%s, line %d)\n", __FILE__, __LINE__);
       switch (aGame->sidetomove)
       {
         case WHITE:
@@ -342,9 +342,9 @@ void MakeMoveStr(char *aMoveStr, TGame *aGame)
   StrToSqr(&aMoveStr[2], &lTo);
   if (strlen(aMoveStr) > 4)
   {
-    printf("# Five characters detected (%s)\n", aMoveStr);
+    //printf("# Five characters detected (%s)\n", aMoveStr);
     lPromotion = StrToPrm(&aMoveStr[4]);
-    printf("# Promotion value: %d\n", lPromotion);
+    //printf("# Promotion value: %d\n", lPromotion);
   }
   lMove.from = lFrom;
   lMove.to = lTo;
@@ -455,6 +455,8 @@ int BestMove2(TGame *aGame, char aMoveStr[/*5*/6], int aOutput)
           if (aOutput) {
             SqrToStr(lList[i].from, &lMoveStr[0]);
             SqrToStr(lList[i].to, &lMoveStr[2]);
+            if (lList[i].promotion != EMPT)
+              PrmToStr(lList[i].promotion, &lMoveStr[4]);
           }
         }
       }
