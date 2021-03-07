@@ -17,8 +17,9 @@ int MoveGen(TGame *aGame, TMoveList aList, int aOne)
   TPieceData *lPiece;
   TSquare to;
   TMove lMove;
-  char lMoveStr[/*5*/6]; // Roland
+  char lMoveStr[/*5*/6];
   int lCount = 0, i = 1;
+  
   if (aGame->sidetomove == WHITE)
   {
     ROKMoveGen(aGame, aList, &lCount, WQEN, aOne);
@@ -51,6 +52,7 @@ int MoveGen(TGame *aGame, TMoveList aList, int aOne)
       return 1;
     lPlayer = &(aGame->blackplayer);
   }
+  
   while (i < 16 && (lPlayer->pieces[i].fig != EMPT))
   {
     lPiece = &(lPlayer->pieces[i]);
@@ -64,7 +66,7 @@ int MoveGen(TGame *aGame, TMoveList aList, int aOne)
       to.y = lPiece->pos.y - 1;
       lMove.from = lPiece->pos;
       lMove.to = to;
-      lMove.promotion = EMPT; // Roland
+      lMove.promotion = EMPT;
       SqrToStr(lPiece->pos, &lMoveStr[0]);
       SqrToStr(to, &lMoveStr[2]);
       if (IsMoveStr(lMoveStr) && IsLegal(lMoveStr, aGame, 0))
@@ -78,7 +80,7 @@ int MoveGen(TGame *aGame, TMoveList aList, int aOne)
       to.y = lPiece->pos.y + 1;
       lMove.from = lPiece->pos;
       lMove.to = to;
-      lMove.promotion = EMPT; // Roland
+      lMove.promotion = EMPT;
       SqrToStr(lPiece->pos, &lMoveStr[0]);
       SqrToStr(to, &lMoveStr[2]);
       if (IsMoveStr(lMoveStr) && IsLegal(lMoveStr, aGame, 0))
@@ -92,7 +94,7 @@ int MoveGen(TGame *aGame, TMoveList aList, int aOne)
       to.y = lPiece->pos.y - 1;
       lMove.from = lPiece->pos;
       lMove.to = to;
-      lMove.promotion = EMPT; // Roland
+      lMove.promotion = EMPT;
       SqrToStr(lPiece->pos, &lMoveStr[0]);
       SqrToStr(to, &lMoveStr[2]);
       if (IsMoveStr(lMoveStr) && IsLegal(lMoveStr, aGame, 0))
@@ -106,7 +108,7 @@ int MoveGen(TGame *aGame, TMoveList aList, int aOne)
       to.y = lPiece->pos.y + 1;
       lMove.from = lPiece->pos;
       lMove.to = to;
-      lMove.promotion = EMPT; // Roland
+      lMove.promotion = EMPT;
       SqrToStr(lPiece->pos, &lMoveStr[0]);
       SqrToStr(to, &lMoveStr[2]);
       if (IsMoveStr(lMoveStr) && IsLegal(lMoveStr, aGame, 0))
@@ -120,7 +122,7 @@ int MoveGen(TGame *aGame, TMoveList aList, int aOne)
       to.y = lPiece->pos.y - 2;
       lMove.from = lPiece->pos;
       lMove.to = to;
-      lMove.promotion = EMPT; // Roland
+      lMove.promotion = EMPT;
       SqrToStr(lPiece->pos, &lMoveStr[0]);
       SqrToStr(to, &lMoveStr[2]);
       if (IsMoveStr(lMoveStr) && IsLegal(lMoveStr, aGame, 0))
@@ -134,7 +136,7 @@ int MoveGen(TGame *aGame, TMoveList aList, int aOne)
       to.y = lPiece->pos.y + 2;
       lMove.from = lPiece->pos;
       lMove.to = to;
-      lMove.promotion = EMPT; // Roland
+      lMove.promotion = EMPT;
       SqrToStr(lPiece->pos, &lMoveStr[0]);
       SqrToStr(to, &lMoveStr[2]);
       if (IsMoveStr(lMoveStr) && IsLegal(lMoveStr, aGame, 0))
@@ -148,7 +150,7 @@ int MoveGen(TGame *aGame, TMoveList aList, int aOne)
       to.y = lPiece->pos.y + 2;
       lMove.from = lPiece->pos;
       lMove.to = to;
-      lMove.promotion = EMPT; // Roland
+      lMove.promotion = EMPT;
       SqrToStr(lPiece->pos, &lMoveStr[0]);
       SqrToStr(to, &lMoveStr[2]);
       if (IsMoveStr(lMoveStr) && IsLegal(lMoveStr, aGame, 0))
@@ -162,7 +164,7 @@ int MoveGen(TGame *aGame, TMoveList aList, int aOne)
       to.y = lPiece->pos.y - 2;
       lMove.from = lPiece->pos;
       lMove.to = to;
-      lMove.promotion = EMPT; // Roland
+      lMove.promotion = EMPT;
       SqrToStr(lPiece->pos, &lMoveStr[0]);
       SqrToStr(to, &lMoveStr[2]);
       if (IsMoveStr(lMoveStr) && IsLegal(lMoveStr, aGame, 0))
@@ -174,6 +176,77 @@ int MoveGen(TGame *aGame, TMoveList aList, int aOne)
       }
       break;
     case BPWN:
+      to.x = lPiece->pos.x;
+      to.y = lPiece->pos.y - 1;
+      SqrToStr(lPiece->pos, &lMoveStr[0]);
+      SqrToStr(to, &lMoveStr[2]);
+      lMove.from = lPiece->pos;
+      lMove.to = to;
+      //if ((lPiece->fig == WPWN) && (to.y == 7)) lMove.promotion = WQEN;
+      //else if ((lPiece->fig == BPWN) && (to.y == 0)) lMove.promotion = BQEN;
+      if (to.y == 0) lMove.promotion = BQEN;
+      else lMove.promotion = EMPT;
+      if (IsMoveStr(lMoveStr) && IsLegal(lMoveStr, aGame, 0))
+      {
+        aList[lCount] = lMove;
+        lCount++;
+        if (aOne)
+          return 1;
+      }
+      
+      to.x = lPiece->pos.x;
+      to.y = lPiece->pos.y - 2;
+      SqrToStr(lPiece->pos, &lMoveStr[0]);
+      SqrToStr(to, &lMoveStr[2]);
+      lMove.from = lPiece->pos;
+      lMove.to = to;
+      lMove.promotion = EMPT;
+      if (IsMoveStr(lMoveStr) && IsLegal(lMoveStr, aGame, 0))
+      {
+        aList[lCount] = lMove;
+        lCount++;
+        if (aOne)
+          return 1;
+      }
+      
+      to.x = lPiece->pos.x + 1;
+      to.y = lPiece->pos.y - 1;
+      SqrToStr(lPiece->pos, &lMoveStr[0]);
+      SqrToStr(to, &lMoveStr[2]);
+      lMove.from = lPiece->pos;
+      lMove.to = to;
+      //if ((lPiece->fig == WPWN) && (to.y == 7)) lMove.promotion = WQEN;
+      //else if ((lPiece->fig == BPWN) && (to.y == 0)) lMove.promotion = BQEN;
+      if (to.y == 0) lMove.promotion = BQEN;
+      else lMove.promotion = EMPT;
+      if (IsMoveStr(lMoveStr) && IsLegal(lMoveStr, aGame, 0))
+      {
+        aList[lCount] = lMove;
+        lCount++;
+        if (aOne)
+          return 1;
+      }
+      
+      to.x = lPiece->pos.x - 1;
+      to.y = lPiece->pos.y - 1;
+      SqrToStr(lPiece->pos, &lMoveStr[0]);
+      SqrToStr(to, &lMoveStr[2]);
+      lMove.from = lPiece->pos;
+      lMove.to = to;
+      //if ((lPiece->fig == WPWN) && (to.y == 7)) lMove.promotion = WQEN;
+      //else if ((lPiece->fig == BPWN) && (to.y == 0)) lMove.promotion = BQEN;
+      if (to.y == 0) lMove.promotion = BQEN;
+      else lMove.promotion = EMPT;
+      if (IsMoveStr(lMoveStr) && IsLegal(lMoveStr, aGame, 0))
+      {
+        aList[lCount] = lMove;
+        lCount++;
+        if (aOne)
+          return 1;
+      }
+      
+      break;
+    
     case WPWN:
       to.x = lPiece->pos.x;
       to.y = lPiece->pos.y + 1;
@@ -181,8 +254,9 @@ int MoveGen(TGame *aGame, TMoveList aList, int aOne)
       SqrToStr(to, &lMoveStr[2]);
       lMove.from = lPiece->pos;
       lMove.to = to;
-      if ((lPiece->fig == WPWN) && (to.y == 7)) lMove.promotion = WQEN; // Roland
-      else if ((lPiece->fig == BPWN) && (to.y == 0)) lMove.promotion = BQEN;
+      //if ((lPiece->fig == WPWN) && (to.y == 7)) lMove.promotion = WQEN;
+      //else if ((lPiece->fig == BPWN) && (to.y == 0)) lMove.promotion = BQEN;
+      if (to.y == 7) lMove.promotion = WQEN;
       else lMove.promotion = EMPT;
       if (IsMoveStr(lMoveStr) && IsLegal(lMoveStr, aGame, 0))
       {
@@ -191,13 +265,14 @@ int MoveGen(TGame *aGame, TMoveList aList, int aOne)
         if (aOne)
           return 1;
       }
+      
       to.x = lPiece->pos.x;
       to.y = lPiece->pos.y + 2;
       SqrToStr(lPiece->pos, &lMoveStr[0]);
       SqrToStr(to, &lMoveStr[2]);
       lMove.from = lPiece->pos;
       lMove.to = to;
-      lMove.promotion = EMPT; // Roland
+      lMove.promotion = EMPT;
       if (IsMoveStr(lMoveStr) && IsLegal(lMoveStr, aGame, 0))
       {
         aList[lCount] = lMove;
@@ -205,44 +280,16 @@ int MoveGen(TGame *aGame, TMoveList aList, int aOne)
         if (aOne)
           return 1;
       }
-      to.x = lPiece->pos.x;
-      to.y = lPiece->pos.y - 1;
-      SqrToStr(lPiece->pos, &lMoveStr[0]);
-      SqrToStr(to, &lMoveStr[2]);
-      lMove.from = lPiece->pos;
-      lMove.to = to;
-      if ((lPiece->fig == WPWN) && (to.y == 7)) lMove.promotion = WQEN; // Roland
-      else if ((lPiece->fig == BPWN) && (to.y == 0)) lMove.promotion = BQEN;
-      else lMove.promotion = EMPT;
-      if (IsMoveStr(lMoveStr) && IsLegal(lMoveStr, aGame, 0))
-      {
-        aList[lCount] = lMove;
-        lCount++;
-        if (aOne)
-          return 1;
-      }
-      to.x = lPiece->pos.x;
-      to.y = lPiece->pos.y - 2;
-      SqrToStr(lPiece->pos, &lMoveStr[0]);
-      SqrToStr(to, &lMoveStr[2]);
-      lMove.from = lPiece->pos;
-      lMove.to = to;
-      lMove.promotion = EMPT; // Roland
-      if (IsMoveStr(lMoveStr) && IsLegal(lMoveStr, aGame, 0))
-      {
-        aList[lCount] = lMove;
-        lCount++;
-        if (aOne)
-          return 1;
-      }
+
       to.x = lPiece->pos.x + 1;
       to.y = lPiece->pos.y + 1;
       SqrToStr(lPiece->pos, &lMoveStr[0]);
       SqrToStr(to, &lMoveStr[2]);
       lMove.from = lPiece->pos;
       lMove.to = to;
-      if ((lPiece->fig == WPWN) && (to.y == 7)) lMove.promotion = WQEN; // Roland
-      else if ((lPiece->fig == BPWN) && (to.y == 0)) lMove.promotion = BQEN;
+      //if ((lPiece->fig == WPWN) && (to.y == 7)) lMove.promotion = WQEN;
+      //else if ((lPiece->fig == BPWN) && (to.y == 0)) lMove.promotion = BQEN;
+      if (to.y == 7) lMove.promotion = WQEN;
       else lMove.promotion = EMPT;
       if (IsMoveStr(lMoveStr) && IsLegal(lMoveStr, aGame, 0))
       {
@@ -251,46 +298,16 @@ int MoveGen(TGame *aGame, TMoveList aList, int aOne)
         if (aOne)
           return 1;
       }
-      to.x = lPiece->pos.x + 1;
-      to.y = lPiece->pos.y - 1;
-      SqrToStr(lPiece->pos, &lMoveStr[0]);
-      SqrToStr(to, &lMoveStr[2]);
-      lMove.from = lPiece->pos;
-      lMove.to = to;
-      if ((lPiece->fig == WPWN) && (to.y == 7)) lMove.promotion = WQEN; // Roland
-      else if ((lPiece->fig == BPWN) && (to.y == 0)) lMove.promotion = BQEN;
-      else lMove.promotion = EMPT;
-      if (IsMoveStr(lMoveStr) && IsLegal(lMoveStr, aGame, 0))
-      {
-        aList[lCount] = lMove;
-        lCount++;
-        if (aOne)
-          return 1;
-      }
+
       to.x = lPiece->pos.x - 1;
       to.y = lPiece->pos.y + 1;
       SqrToStr(lPiece->pos, &lMoveStr[0]);
       SqrToStr(to, &lMoveStr[2]);
       lMove.from = lPiece->pos;
       lMove.to = to;
-      if ((lPiece->fig == WPWN) && (to.y == 7)) lMove.promotion = WQEN; // Roland
-      else if ((lPiece->fig == BPWN) && (to.y == 0)) lMove.promotion = BQEN;
-      else lMove.promotion = EMPT;
-      if (IsMoveStr(lMoveStr) && IsLegal(lMoveStr, aGame, 0))
-      {
-        aList[lCount] = lMove;
-        lCount++;
-        if (aOne)
-          return 1;
-      }
-      to.x = lPiece->pos.x - 1;
-      to.y = lPiece->pos.y - 1;
-      SqrToStr(lPiece->pos, &lMoveStr[0]);
-      SqrToStr(to, &lMoveStr[2]);
-      lMove.from = lPiece->pos;
-      lMove.to = to;
-      if ((lPiece->fig == WPWN) && (to.y == 7)) lMove.promotion = WQEN; // Roland
-      else if ((lPiece->fig == BPWN) && (to.y == 0)) lMove.promotion = BQEN;
+      //if ((lPiece->fig == WPWN) && (to.y == 7)) lMove.promotion = WQEN;
+      //else if ((lPiece->fig == BPWN) && (to.y == 0)) lMove.promotion = BQEN;
+      if (to.y == 7) lMove.promotion = WQEN;
       else lMove.promotion = EMPT;
       if (IsMoveStr(lMoveStr) && IsLegal(lMoveStr, aGame, 0))
       {
@@ -302,6 +319,7 @@ int MoveGen(TGame *aGame, TMoveList aList, int aOne)
     }
     i++;
   }
+  
   /* KRALe si nechame az na konec */
   lPiece = &(lPlayer->pieces[0]);
   if ((lPiece->fig == WKNG) || (lPiece->fig == BKNG))
@@ -313,7 +331,7 @@ int MoveGen(TGame *aGame, TMoveList aList, int aOne)
     to.y = lPiece->pos.y;
     lMove.from = lPiece->pos;
     lMove.to = to;
-    lMove.promotion = EMPT; // Roland
+    lMove.promotion = EMPT;
     SqrToStr(lPiece->pos, &lMoveStr[0]);
     SqrToStr(to, &lMoveStr[2]);
     if (IsMoveStr(lMoveStr) && IsLegal(lMoveStr, aGame, 0))
@@ -327,7 +345,7 @@ int MoveGen(TGame *aGame, TMoveList aList, int aOne)
     to.y = lPiece->pos.y;
     lMove.from = lPiece->pos;
     lMove.to = to;
-    lMove.promotion = EMPT; // Roland
+    lMove.promotion = EMPT;
     SqrToStr(lPiece->pos, &lMoveStr[0]);
     SqrToStr(to, &lMoveStr[2]);
     if (IsMoveStr(lMoveStr) && IsLegal(lMoveStr, aGame, 0))
@@ -342,7 +360,7 @@ int MoveGen(TGame *aGame, TMoveList aList, int aOne)
     to.y = lPiece->pos.y;
     lMove.from = lPiece->pos;
     lMove.to = to;
-    lMove.promotion = EMPT; // Roland
+    lMove.promotion = EMPT;
     SqrToStr(lPiece->pos, &lMoveStr[0]);
     SqrToStr(to, &lMoveStr[2]);
     if (IsMoveStr(lMoveStr) && IsLegal(lMoveStr, aGame, 0))
@@ -356,7 +374,7 @@ int MoveGen(TGame *aGame, TMoveList aList, int aOne)
     to.y = lPiece->pos.y - 1;
     lMove.from = lPiece->pos;
     lMove.to = to;
-    lMove.promotion = EMPT; // Roland
+    lMove.promotion = EMPT;
     SqrToStr(lPiece->pos, &lMoveStr[0]);
     SqrToStr(to, &lMoveStr[2]);
     if (IsMoveStr(lMoveStr) && IsLegal(lMoveStr, aGame, 0))
@@ -370,7 +388,7 @@ int MoveGen(TGame *aGame, TMoveList aList, int aOne)
     to.y = lPiece->pos.y + 1;
     lMove.from = lPiece->pos;
     lMove.to = to;
-    lMove.promotion = EMPT; // Roland
+    lMove.promotion = EMPT;
     SqrToStr(lPiece->pos, &lMoveStr[0]);
     SqrToStr(to, &lMoveStr[2]);
     if (IsMoveStr(lMoveStr) && IsLegal(lMoveStr, aGame, 0))
@@ -384,7 +402,7 @@ int MoveGen(TGame *aGame, TMoveList aList, int aOne)
     to.y = lPiece->pos.y - 1;
     lMove.from = lPiece->pos;
     lMove.to = to;
-    lMove.promotion = EMPT; // Roland
+    lMove.promotion = EMPT;
     SqrToStr(lPiece->pos, &lMoveStr[0]);
     SqrToStr(to, &lMoveStr[2]);
     if (IsMoveStr(lMoveStr) && IsLegal(lMoveStr, aGame, 0))
@@ -398,7 +416,7 @@ int MoveGen(TGame *aGame, TMoveList aList, int aOne)
     to.y = lPiece->pos.y + 1;
     lMove.from = lPiece->pos;
     lMove.to = to;
-    lMove.promotion = EMPT; // Roland
+    lMove.promotion = EMPT;
     SqrToStr(lPiece->pos, &lMoveStr[0]);
     SqrToStr(to, &lMoveStr[2]);
     if (IsMoveStr(lMoveStr) && IsLegal(lMoveStr, aGame, 0))
@@ -412,7 +430,7 @@ int MoveGen(TGame *aGame, TMoveList aList, int aOne)
     to.y = lPiece->pos.y - 1;
     lMove.from = lPiece->pos;
     lMove.to = to;
-    lMove.promotion = EMPT; // Roland
+    lMove.promotion = EMPT;
     SqrToStr(lPiece->pos, &lMoveStr[0]);
     SqrToStr(to, &lMoveStr[2]);
     if (IsMoveStr(lMoveStr) && IsLegal(lMoveStr, aGame, 0))
@@ -426,7 +444,7 @@ int MoveGen(TGame *aGame, TMoveList aList, int aOne)
     to.y = lPiece->pos.y;
     lMove.from = lPiece->pos;
     lMove.to = to;
-    lMove.promotion = EMPT; // Roland
+    lMove.promotion = EMPT;
     SqrToStr(lPiece->pos, &lMoveStr[0]);
     SqrToStr(to, &lMoveStr[2]);
     if (IsMoveStr(lMoveStr) && IsLegal(lMoveStr, aGame, 0))
@@ -440,7 +458,7 @@ int MoveGen(TGame *aGame, TMoveList aList, int aOne)
     to.y = lPiece->pos.y + 1;
     lMove.from = lPiece->pos;
     lMove.to = to;
-    lMove.promotion = EMPT; // Roland
+    lMove.promotion = EMPT;
     SqrToStr(lPiece->pos, &lMoveStr[0]);
     SqrToStr(to, &lMoveStr[2]);
     if (IsMoveStr(lMoveStr) && IsLegal(lMoveStr, aGame, 0))
@@ -453,7 +471,7 @@ int MoveGen(TGame *aGame, TMoveList aList, int aOne)
   }
   else
   {
-    printf("DEBUG: Nulta figura != KRAL ??? BUG!\n");
+    printf("# DEBUG: Nulta figura != KRAL ??? BUG!\n");
     PrintPieces(*aGame);
   }
   return lCount;

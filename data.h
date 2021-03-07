@@ -19,12 +19,12 @@
 #define BOOKFILE "sachy.bk"
 #define CFGFILE "sachy.cfg"
 
-/* default time controls: 120 minutes/40 moves */
+/* default time controls: 120 minutes / 40 moves */
 #define TMOVES 40
 #define TSECONDS 120 * 60
 
-#define DEPTH 1   /* hloubla prohledavani >=1 !!! */
-#define SDEPTH  0   /* hloubka dohledavani do tichych pozic */
+#define DEPTH 1 /* hloubla prohledavani >=1 !!! */
+#define SDEPTH 0 /* hloubka dohledavani do tichych pozic */
 /* <= 0 */
 
 /* pieces na sachovnici */
@@ -59,7 +59,7 @@ typedef struct /* POZICE */
 typedef struct /* TAH */
 {
   TSquare from, to;
-  char promotion; // Roland
+  char promotion;
 } TMove;
 
 typedef struct /* FIGURA */
@@ -81,7 +81,7 @@ typedef struct /* HRA */
 {
   TBoard board;
   TPlayer whiteplayer, blackplayer;
-  char sidetomove; /* whiteplayer, blackplayer */
+  char sidetomove; /* BILY / CERNY */
   char enpas; /* sloupec s pescem */
   int fHalfMovesCount; /* pocet hranych (pul)tahu */
   int tmoves, tseconds, tclockmode; /* level command values */
@@ -174,6 +174,8 @@ void Sort(TMoveList, int[], int);
 /* book.c */
 int OpenBook(TBook *); /* nacte soubor BOOKFILE do TBook */
 void PrintBook(TBook *); /* vytiskne TBook na obrazovku */
+
+/* Log files */
 
 extern FILE *f1;
 extern FILE *f2;
