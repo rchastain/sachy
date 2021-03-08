@@ -25,9 +25,9 @@ int IsMoveStr(char *aStr)
     return 0;
 }
 
-int IsPossible(char *aMoveStr, TGame *aGame)
+int IsPossible(char *aMoveStr, TGame *aGame, int aOutput)
 {
-  int lPiece;
+  int lPiece, lOutput;
   TMove lMove;
   StrToSqr(&aMoveStr[0], &lMove.from);
   StrToSqr(&aMoveStr[2], &lMove.to);
@@ -35,7 +35,7 @@ int IsPossible(char *aMoveStr, TGame *aGame)
   /* stoji tam figura? */
   if (lPiece == EMPT)
   {
-    printf("Illegal move (nothing to move): ");
+    lOutput = aOutput && printf("# Illegal move (nothing to move): %s\n", aMoveStr);
     return 0;
   }
   /* stoji tam figura stejne barvy? */
@@ -44,14 +44,14 @@ int IsPossible(char *aMoveStr, TGame *aGame)
   case WHITE:
     if (BlackPiece(lPiece))
     {
-      printf("Illegal move (not your figure): ");
+      lOutput = aOutput && printf("# Illegal move (not your figure): %s\n", aMoveStr);
       return 0;
     }
     break;
   case BLACK:
     if (WhitePiece(lPiece))
     {
-      printf("Illegal move (not your figure): ");
+      lOutput = aOutput && printf("# Illegal move (not your figure): %s\n", aMoveStr);
       return 0;
     }
     break;
@@ -59,24 +59,27 @@ int IsPossible(char *aMoveStr, TGame *aGame)
   /* lze tou figurou takto tahnout? */
   if (!PieceCanMove(lMove, aGame))
   {
-    printf("Illegal move (ambiguous move): ");
+    lOutput = aOutput && printf("# Illegal move (ambiguous move): %s\n", aMoveStr);
     return 0;
   }
   /* volna cesta ? */
   if ((lPiece == WQEN || lPiece == BQEN || lPiece == WROK || lPiece == BROK || lPiece == WBSP || lPiece == BBSP)
       && !(EmptyPath(lMove, aGame->board)))
   {
-    printf("Illegal move (occupied way): ");
+    lOutput = aOutput && printf("# Illegal move (occupied way): %s\n", aMoveStr);
     return 0;
   }
+  
+  if (lOutput) {};
+  
   return 1;
 }
 
-int IsLegal(char *aMoveStr, TGame * aGame, int vv)
+int IsLegal(char *aMoveStr, TGame * aGame, int aOutput)
 {
   /* zda je tah podle pravidel */
   TSquare from, to;
-  int lPiece, vvv;
+  int lPiece, lOutput;
   TMove lMove;
   static TGame lGame;
   StrToSqr(&aMoveStr[0], &from);
@@ -90,14 +93,14 @@ int IsLegal(char *aMoveStr, TGame * aGame, int vv)
     case WHITE:
       if (WhitePiece(lPiece))
       {
-        vvv = vv && printf("Illegal move (can't take own figure): ");
+        lOutput = aOutput && printf("# Illegal move (can't take own figure): %s\n", aMoveStr);
         return 0;
       }
       break;
     case BLACK:
       if (BlackPiece(lPiece))
       {
-        vvv = vv && printf("Illegal move (can't take own figure): ");
+        lOutput = aOutput && printf("# Illegal move (can't take own figure): %s\n", aMoveStr);
         return 0;
       }
       break;
@@ -106,7 +109,7 @@ int IsLegal(char *aMoveStr, TGame * aGame, int vv)
   lPiece = aGame->board[from.x][from.y];
   if ((lPiece == WKNG || lPiece == BKNG || lPiece == WPWN || lPiece == BPWN) && !TahFigurou2(lMove, aGame))
   {
-    vvv = vv && printf("Illegal move (ambiguous move): ");
+    lOutput = aOutput && printf("# Illegal move (ambiguous move): %s\n", aMoveStr);
     return 0;
   }
   /* nebudu pak v sachu? */
@@ -117,10 +120,10 @@ int IsLegal(char *aMoveStr, TGame * aGame, int vv)
   /* printf(" ... test sachu ...\n"); */
   if (InCheck(aGame->sidetomove, &lGame))
   {
-    vvv = vv && printf("Illegal move (moving into check): ");
+    lOutput = aOutput && printf("# Illegal move (moving into check): %s\n", aMoveStr);
     return 0;
   }
-  if (vvv) {};
+  if (lOutput) {};
   /* vse je tedy ok */
   return 1;
 }
@@ -451,7 +454,8 @@ void RemovePiece(TPlayer * aPlayer)
   if (i > 15)
   {
     fprintf(stderr, "Internal error (%s, line %d)\n", __FILE__, __LINE__);
-    return;
+    //return;
+    exit(0);
   }
   for (i = i; i < 15; i++)
     aPlayer->pieces[i] = aPlayer->pieces[i + 1];
@@ -667,8 +671,8 @@ int IsMate(TGame * aGame)
 
 int IsStaleMate(TGame * aGame)
 {
-  TMoveList mg;
-  if (MoveGen(aGame, mg, 1))
+  TMoveList lList;
+  if (MoveGen(aGame, lList, 1))
     return 0;
   else if (InCheck(aGame->sidetomove, aGame))
     return 0;

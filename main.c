@@ -89,12 +89,14 @@ int main(int argc, char **argv)
     
     /* Game state */
     
+    /*
     if (IsStaleMate(&lGame))
       printf("# Draw\n");
     else if (IsMate(&lGame))
       printf("# Checkmate\n");
     else if (InCheck(lGame.sidetomove, &lGame))
       printf("# Check\n");
+    */
     
     /* Prompt */
     
@@ -111,6 +113,7 @@ int main(int argc, char **argv)
     if (lGame.sidetomove == lComputerColor)
     {
       printf("# Thinking\n");
+      
       if (lUseBook)
       {
         pt = lBook.p[lBook.aktual].poctah;
@@ -124,8 +127,10 @@ int main(int argc, char **argv)
         else
           lUseBook = 0;
       }
+      
       if (lUseBook == 0)
         lTimeElapsed = BestMove2(&lGame, lMoveStr, 1);
+      
       if (lTimeElapsed >= 0)
       {
         lGame.tleft -= lTimeElapsed;
@@ -141,6 +146,7 @@ int main(int argc, char **argv)
         printf("# Engine error");
         lComputerColor = NONE;
       }
+      
       continue;
     }
     
@@ -319,7 +325,7 @@ int main(int argc, char **argv)
     
     else if (IsMoveStr(lCmd))
     {
-      if (IsPossible(lCmd, &lGame) && IsLegal(lCmd, &lGame, 1))
+      if (IsPossible(lCmd, &lGame, 1) && IsLegal(lCmd, &lGame, 1))
       {
         MakeMoveStr(lCmd, &lGame);
         printf("# Move accepted\n");

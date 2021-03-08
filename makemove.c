@@ -3,13 +3,17 @@
  *  Provadeni tahu a vyber tahu
  */
 
+#include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include <time.h>
+//#include <time.h>
+#include <sys/time.h>
 #include "data.h"
 
 extern int IQ, SIQ;
 extern TMove historie[MAXMOVHIS]; /* 1.tah = [1] */
+
+char logBuffer[256];
 
 void MakeMove(TMove aMove, TGame *aGame)
 {
@@ -34,7 +38,8 @@ void MakeMove(TMove aMove, TGame *aGame)
         fprintf(stderr, "# Internal error (%s, line %d)\n", __FILE__, __LINE__);
         PrintBoard(*aGame);
         //printf("%s", aMoveStr);
-        return;
+        //return;
+        exit(0);
       }
       break;
     case BLACK:
@@ -43,7 +48,8 @@ void MakeMove(TMove aMove, TGame *aGame)
         fprintf(stderr, "# Internal error (%s, line %d)\n", __FILE__, __LINE__);
         PrintBoard(*aGame);
         //printf("%s", aMoveStr);
-        return;
+        //return;
+        exit(0);
       }
       break;
   }
@@ -99,14 +105,16 @@ void MakeMove(TMove aMove, TGame *aGame)
         if (!FindPiece(lTo, aGame->board, &(aGame->whiteplayer), &lCapturedPieceIdx))
         {
           fprintf(stderr, "# Internal error (%s, line %d)\n", __FILE__, __LINE__);
-          return;
+          //return;
+          exit(0);
         }
         break;
       case WHITE:
         if (!FindPiece(lTo, aGame->board, &(aGame->blackplayer), &lCapturedPieceIdx))
         {
           fprintf(stderr, "# Internal error (%s, line %d)\n", __FILE__, __LINE__);
-          return;
+          //return;
+          exit(0);
         }
         break;
     }
@@ -145,14 +153,16 @@ void MakeMove(TMove aMove, TGame *aGame)
         if (!FindPiece(lAux, aGame->board, &(aGame->whiteplayer), &lCapturedPieceIdx))
         {
           fprintf(stderr, "# Internal error (%s, line %d)\n", __FILE__, __LINE__);
-          return;
+          //return;
+          exit(0);
         }
         break;
       case WHITE:
         if (!FindPiece(lAux, aGame->board, &(aGame->blackplayer), &lCapturedPieceIdx))
         {
           fprintf(stderr, "# Internal error (%s, line %d)\n", __FILE__, __LINE__);
-          return;
+          //return;
+          exit(0);
         }
         break;
     }
@@ -205,7 +215,8 @@ void MakeMove(TMove aMove, TGame *aGame)
       if (!FindPiece(lAux, aGame->board, &(aGame->whiteplayer), &lRookIdx))
       {
         fprintf(stderr, "# Internal error (%s, line %d)\n", __FILE__, __LINE__);
-        return;
+        //return;
+        exit(0);
       }
       else
       {
@@ -224,7 +235,8 @@ void MakeMove(TMove aMove, TGame *aGame)
       if (!FindPiece(lAux, aGame->board, &(aGame->whiteplayer), &lRookIdx))
       {
         fprintf(stderr, "# Internal error (%s, line %d)\n", __FILE__, __LINE__);
-        return;
+        //return;
+        exit(0);
       }
       else
       {
@@ -243,7 +255,8 @@ void MakeMove(TMove aMove, TGame *aGame)
       if (!FindPiece(lAux, aGame->board, &(aGame->blackplayer), &lRookIdx))
       {
         fprintf(stderr, "# Internal error (%s, line %d)\n", __FILE__, __LINE__);
-        return;
+        //return;
+        exit(0);
       }
       else
       {
@@ -262,7 +275,8 @@ void MakeMove(TMove aMove, TGame *aGame)
       if (!FindPiece(lAux, aGame->board, &(aGame->blackplayer), &lRookIdx))
       {
         fprintf(stderr, "# Internal error (%s, line %d)\n", __FILE__, __LINE__);
-        return;
+        //return;
+        exit(0);
       }
       else
       {
@@ -296,6 +310,8 @@ void MakeMove(TMove aMove, TGame *aGame)
     if (lMove.promotion == EMPT)
     {
       fprintf(stderr, "# Internal error (%s, line %d)\n", __FILE__, __LINE__);
+      exit(0);
+      /*
       switch (aGame->sidetomove)
       {
         case WHITE:
@@ -307,6 +323,7 @@ void MakeMove(TMove aMove, TGame *aGame)
           aGame->board[lTo.x][lTo.y] = BQEN;
           break;
       }
+      */
     }
     else
     {
@@ -417,10 +434,16 @@ int BestMove2(TGame *aGame, char aMoveStr[/*5*/6], int aOutput)
   static TGame lGame;
   TMoveList lList;
   int lCount, lBest, lBestVal, lVal, lValArr[MAXMOVGEN], lDepth = 1, i, lTotal = 0;
-  time_t t1, t2;
+  //time_t t1, t2;
+  long t1, t2;
+  struct timeval timecheck;
   char lMoveStr[6];
+  double lTimeAvailable, lTimeElapsed;
   
-  time(&t1);
+  //time(&t1);
+  gettimeofday(&timecheck, NULL);
+  t1 = (long)timecheck.tv_sec * 1000 + (long)timecheck.tv_usec / 1000;
+  
   lCount = MoveGen(aGame, lList, 0);
   lTotal += lCount;
   if (lCount == 0)
@@ -460,10 +483,23 @@ int BestMove2(TGame *aGame, char aMoveStr[/*5*/6], int aOutput)
           }
         }
       }
-      time(&t2);
+      //time(&t2);
+      gettimeofday(&timecheck, NULL);
+      t2 = (long)timecheck.tv_sec * 1000 + (long)timecheck.tv_usec / 1000;
+      
       if (aOutput) printf("%d %d %ld %d %s\n", lDepth, lBestVal, t2 - t1, lTotal, lMoveStr);
       /* TODO make this better */
-      if ((((t2 - t1) * 5) * (aGame->tmoves - (((aGame->fHalfMovesCount + 1)) / 2) % aGame->tmoves)) > aGame->tleft)
+      lTimeAvailable = (double)aGame->tseconds / aGame->tmoves;
+      //lTimeElapsed = difftime(t2, t1);
+      lTimeElapsed = (double)(t2 - t1) / 1000;
+      sprintf(logBuffer, "time available: %f; time elapsed: %f", lTimeAvailable, lTimeElapsed);
+      ToLog(logBuffer, 1);
+      
+      if (
+        (lBestVal == MATV) ||
+        //((((t2 - t1) * 5) * (aGame->tmoves - ((aGame->fHalfMovesCount + 1) / 2) % aGame->tmoves)) > aGame->tleft)
+        (lTimeElapsed > lTimeAvailable / 5)
+      )
         break;
       else
       {

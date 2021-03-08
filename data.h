@@ -121,7 +121,7 @@ int StrToPrm(char *); /* String to promotion */
 
 /* rules.c */
 int IsMoveStr(char *); /* zda to je e1e3,d4d5,b1c3 ... proste tah */
-int IsPossible(char *, TGame *);
+int IsPossible(char *, TGame *, int);
 int IsLegal(char *, TGame *, int); /* vrati, zda je tah("aXfY") podle pravidel */
 int PawnCanMove(TMove, TGame *); /* muze takto pesec tahnout? */
 int EmptyPath(TMove, TBoard); /* ma figura volnou cestu? */
