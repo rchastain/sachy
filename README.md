@@ -8,9 +8,15 @@ Retouched by Dann Corbit (v0.2.0.1) then by Roland Chastain (v0.2.0.2).
 
 ## History
 
+### v0.2.0.4
+
+* Support underpromotion from the opponent
+* Simplify pawn moves generation
+* Try to improve time management
+
 ### v0.2.0.3
 
-* Improved protocol management
+* Use [CECP v2](http://hgm.nubati.net/CECP.html)
 * New Makefile which allows to choose between 32-bit and 64-bit compilation (1)
 * Made a faster version of the `MakeMove` function
 * Minimal thinking output for WinBoard/XBoard
