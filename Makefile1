@@ -1,0 +1,16 @@
+# Makefile pro SACHY
+
+CC	=	gcc
+CFLAGS	=	-Wall
+
+objects = main.o inic.o interf.o movegen.o value.o rules.o makemove.o search.o test.o sort.o book.o
+
+sachy:	$(objects)
+	$(CC) -o sachy $(objects)
+
+$(objects):	data.h 
+
+.PHONY: clean
+
+clean:
+	rm sachy $(objects)
