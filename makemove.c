@@ -13,7 +13,7 @@
 extern int IQ, SIQ;
 extern TMove historie[MAXMOVHIS]; /* 1.tah = [1] */
 
-char logBuffer[256];
+extern char logBuffer[256];
 
 void MakeMove(TMove aMove, TGame *aGame)
 {
